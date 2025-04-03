@@ -1,7 +1,7 @@
 <template>
    <a-layout style="min-height: 100vh">
     <a-layout-sider v-model:collapsed="collapsed" collapsible>
-      <div class="logo" />
+      <div class="logo"  />
       <a-menu v-model:selectedKeys="selectedKeys" theme="dark" mode="inline">
         <a-menu-item key="1">
           <pie-chart-outlined />
@@ -54,10 +54,6 @@
       </a-layout-footer>
     </a-layout>
   </a-layout>
-<div class="person">
-    <h1>邹进</h1>
-    <Button>123</Button>
-</div>
 </template>
 <script lang="ts" setup name="Person">
 import { Button } from 'ant-design-vue';
@@ -76,13 +72,13 @@ const selectedKeys = ref<string[]>(['1']);
 
 </script>
 <style>
-.person{
+/* .person{
     background-color: skyblue;
     box-shadow: 0 0 10px;
     border-radius: 10px;
     padding: 20px;
-}
-#components-layout-demo-side .logo {
+} */
+/* #components-layout-demo-side .logo {
   height: 32px;
   margin: 16px;
   background: rgba(255, 255, 255, 0.3);
@@ -93,5 +89,5 @@ const selectedKeys = ref<string[]>(['1']);
 }
 [data-theme='dark'] .site-layout .site-layout-background {
   background: #141414;
-}
+} */
 </style>
