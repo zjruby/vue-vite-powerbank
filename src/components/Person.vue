@@ -1,7 +1,7 @@
 <template>
-   <a-layout style="min-height: 100vh">
+  <a-layout style="min-height: 100vh">
     <a-layout-sider v-model:collapsed="collapsed" collapsible>
-      <div class="logo"  />
+      <div class="logo" />
       <a-menu v-model:selectedKeys="selectedKeys" theme="dark" mode="inline">
         <a-menu-item key="1">
           <pie-chart-outlined />
@@ -40,24 +40,23 @@
     </a-layout-sider>
     <a-layout>
       <a-layout-header style="background: #fff; padding: 0" />
-      <a-layout-content style="margin: 0 16px">
-        <a-breadcrumb style="margin: 16px 0">
-          <a-breadcrumb-item>User</a-breadcrumb-item>
-          <a-breadcrumb-item>Bill</a-breadcrumb-item>
-        </a-breadcrumb>
-        <div :style="{ padding: '24px', background: '#fff', minHeight: '360px' }">
-          Bill is a cat.
-        </div>
-      </a-layout-content>
+      <a-table :columns="columns" :data-source="users" :scroll="{ x: 1500, y: 500 }">
+        <template #bodyCell="{ column }">
+          <template v-if="column.key === 'operation'">
+            <a>action</a>
+          </template>
+        </template>
+      </a-table>
       <a-layout-footer style="text-align: center">
-        Ant Design ©2018 Created by Ant UED
+        
       </a-layout-footer>
     </a-layout>
   </a-layout>
 </template>
 <script lang="ts" setup name="Person">
-import { Button } from 'ant-design-vue';
-import { ref } from 'vue';
+import type { TableColumnsType } from 'ant-design-vue';
+import { ref, onMounted } from 'vue';
+import axios from 'axios';
 import {
   PieChartOutlined,
   DesktopOutlined,
@@ -67,10 +66,50 @@ import {
 } from '@ant-design/icons-vue';
 const collapsed = ref<boolean>(false);
 const selectedKeys = ref<string[]>(['1']);
-//     name:'person'
-// }
 
+//接口
+interface user {
+  name: string,
+  number: number,
+  time: string
+}
+
+const users = ref<user[]>([])
+
+const fetchData = async () => {
+  try {
+    const response = await axios.get<user[]>("http://localhost:3001")
+    users.value = response.data;
+  } catch (error) {
+    console.log("错误：", error)
+  }
+}
+//生命周期钩子，组件在挂载后调用函数
+onMounted(() => {
+  fetchData();
+})
+
+//表格
+const columns: TableColumnsType = [
+  { title: 'Name', width: 100, dataIndex: 'name', key: 'name', fixed: 'left' },
+  { title: 'number', width: 100, dataIndex: 'number', key: 'age', fixed: 'left' },
+  { title: 'time', dataIndex: 'time', key: '1', width: 150 },
+  {
+    title: 'Action',
+    key: 'operation',
+    fixed: 'right',
+    width: 100,
+  },
+];
 </script>
+
+
+
+
+
+
+
+
 <style>
 /* .person{
     background-color: skyblue;

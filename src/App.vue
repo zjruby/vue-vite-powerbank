@@ -1,7 +1,7 @@
 <template>
 <!-- <text1></text1> -->
-<!-- <person></person> -->
- <index></index>
+ <!-- <index></index> -->
+ <person></person>
 </template>
 
 <script lang="ts">
