@@ -39,22 +39,29 @@
       </a-menu>
     </a-layout-sider>
     <a-layout>
-      <a-layout-header style="background: #fff; padding: 0" />
-      <a-table :columns="columns" :data-source="users" :scroll="{ x: 1500, y: 500 }">
+      <a-layout-header style="background: #fff;padding: 0;">
+        <div style=" border: 0px red solid;">
+          <Button type="primary" style="float: left;margin-top: 20px; margin-left: 100px;">增加</Button>
+          <a-space direction="vertical" style="margin:20px 0 0 600px;">
+            <a-input-search v-model:value="value" placeholder="input search text" enter-button @search="onSearch" />
+          </a-space>
+        </div>
+      </a-layout-header>
+      <a-table :columns="columns" :data-source="users" :scroll="{ x: 1300, y: 1000 }">
         <template #bodyCell="{ column }">
           <template v-if="column.key === 'operation'">
-            <a>action</a>
+            <a>更改</a>
           </template>
         </template>
       </a-table>
       <a-layout-footer style="text-align: center">
-        
+
       </a-layout-footer>
     </a-layout>
   </a-layout>
 </template>
 <script lang="ts" setup name="Person">
-import type { TableColumnsType } from 'ant-design-vue';
+import { Button, type TableColumnsType } from 'ant-design-vue';
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import {
@@ -67,6 +74,11 @@ import {
 const collapsed = ref<boolean>(false);
 const selectedKeys = ref<string[]>(['1']);
 
+const value = ref<string>('');
+const onSearch = (searchValue: string) => {
+  console.log('use value', searchValue);
+  console.log('or use this.value', value.value);
+};
 //接口
 interface user {
   name: string,
@@ -91,11 +103,11 @@ onMounted(() => {
 
 //表格
 const columns: TableColumnsType = [
-  { title: 'Name', width: 100, dataIndex: 'name', key: 'name', fixed: 'left' },
-  { title: 'number', width: 100, dataIndex: 'number', key: 'age', fixed: 'left' },
-  { title: 'time', dataIndex: 'time', key: '1', width: 150 },
+  { title: '名字', width: 100, dataIndex: 'name', key: 'name', fixed: 'left' },
+  { title: '电话', width: 150, dataIndex: 'number', key: 'age', fixed: 'left' },
+  { title: '时间', dataIndex: 'time', key: '1', width: 200 },
   {
-    title: 'Action',
+    title: '',
     key: 'operation',
     fixed: 'right',
     width: 100,
@@ -111,22 +123,5 @@ const columns: TableColumnsType = [
 
 
 <style>
-/* .person{
-    background-color: skyblue;
-    box-shadow: 0 0 10px;
-    border-radius: 10px;
-    padding: 20px;
-} */
-/* #components-layout-demo-side .logo {
-  height: 32px;
-  margin: 16px;
-  background: rgba(255, 255, 255, 0.3);
-}
 
-.site-layout .site-layout-background {
-  background: #fff;
-}
-[data-theme='dark'] .site-layout .site-layout-background {
-  background: #141414;
-} */
 </style>

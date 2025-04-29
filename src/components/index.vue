@@ -17,7 +17,7 @@
     </div>
 </template>
 
-<style code>
+<style code scoped>
 td{
     border: 1px black solid;
     padding: 20px;
